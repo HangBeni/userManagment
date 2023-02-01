@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class PrimaryController implements Initializable {
+public class LoginWindowController implements Initializable {
 
     @FXML
     PasswordField userPassword;
