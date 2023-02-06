@@ -12,11 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class LoginWindowController implements Initializable {
@@ -36,26 +34,26 @@ public class LoginWindowController implements Initializable {
     //#endregion
     
     @FXML
-    private void handleLogin(ActionEvent event){
-        if(nameCheck(nameLabel.getText()) && passwordCheck(userPassword.getText()))
-            ;
+    private void handleLogin(ActionEvent event) throws IOException{
+        if(nameCheck(userName.getText()) && passwordCheck(userPassword.getText()))
+            switchWindow(event);
     }
 
     private boolean passwordCheck(String text) {
         int textLength = text.length();
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Check");
-        alert.setContentText("A jelszó mező hossza: "+textLength);
-        if( textLength < 8 || textLength == 0 || textLength > 15 ){
+        if( textLength < 6 || textLength == 0 || textLength > 15 ){
             userName.setStyle("-fx-border-color: red");
-            if (textLength < 8) {
+            if (textLength < 6) {
                 passwordLabel.setText("Túl kevés karakter, 8 karakternél több kell, még "+textLength+" db kell");
+                userPassword.setStyle("-fx-border-color: red");
                 return false;
             } else if(textLength == 0) {
                 passwordLabel.setText("Nem írtál be semmit haló");
+                userPassword.setStyle("-fx-border-color: red");
                 return false;
             }else{
                 passwordLabel.setText("Túl sok karakter tesvérem");
+                userPassword.setStyle("-fx-border-color: red");
                 return false;
             }
             }
@@ -64,12 +62,9 @@ public class LoginWindowController implements Initializable {
     }
 
     private boolean nameCheck(String text) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Check");
         int names = text.split(" ").length;
-        alert.setContentText("A név mezőben: "+names+ " név van");
         if(names <2  || names ==0){
-            nameLabel.setText("Nem jó a név mező, legalább egy kereszt- és vezetéknév kell");
+            nameLabel.setText("Nem jó a név, legalább egy kereszt- és vezetéknév kell!");
             userName.setStyle("-fx-border-color: red");
             return false;
         }
